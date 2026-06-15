@@ -1,4 +1,3 @@
-// ข้อมูลสกิลของ Don Quixote ทั้งหมด (อัปเดตตัวละครเพิ่มแบบจุใจ)
 const donData = {
     wCorp: {
         name: "W Corp. L3 Cleanup Agent Don Quixote",
@@ -66,7 +65,6 @@ const donData = {
     }
 };
 
-// อัปเดตเมนูสกิลเมื่อเลือกตัวละคร
 function updateSkillOptions() {
     const identityKey = document.getElementById("identitySelect").value;
     const skillSelect = document.getElementById("skillSelect");
@@ -80,10 +78,11 @@ function updateSkillOptions() {
     });
 }
 
-// ระบบทอยเหรียญคำนวณพลัง
+// ฟังก์ชันหลักที่เพิ่มระบบแอนิเมชันหมุนเหรียญ
 function executeCoinToss() {
     const identityKey = document.getElementById("identitySelect").value;
     const skillIndex = document.getElementById("skillSelect").value;
+    const tossButton = document.getElementById("tossButton");
     let sp = parseInt(document.getElementById("spInput").value);
 
     if (sp > 45) sp = 45;
@@ -91,33 +90,63 @@ function executeCoinToss() {
 
     const selectedIdentity = donData[identityKey];
     const selectedSkill = selectedIdentity.skills[skillIndex];
-    
-    // โอกาสออกหัวคำนวณตามสูตรเกม (Base 50% + ค่า SP)
     const headChance = 50 + sp; 
+
+    // ล็อคปุ่มไม่ให้กดซ้ำระหว่างหมุน
+    tossButton.disabled = true;
+    document.getElementById("resultBox").style.display = "none";
+    
+    const coinStage = document.getElementById("coinStage");
+    coinStage.innerHTML = ""; // ล้างเหรียญเก่า
+
+    // สร้าง Element เหรียญหมุนจำลองบนหน้าจอ
+    for (let i = 1; i <= selectedSkill.coinCount; i++) {
+        const coinWrapper = document.createElement("div");
+        coinWrapper.className = "coin-wrapper";
+        coinWrapper.innerHTML = `
+            <div class="coin-inner spinning" id="coin-${i}">
+                <div class="coin-face coin-front">HEAD</div>
+                <div class="coin-face coin-back">TAIL</div>
+            </div>
+        `;
+        coinStage.appendChild(coinWrapper);
+    }
 
     let currentPower = selectedSkill.basePower;
     let detailsHTML = "";
     let headsCount = 0;
 
+    // ค่อยๆ หยุดหมุนทีละเหรียญแบบมีดีเลย์สไตล์เกม
     for (let i = 1; i <= selectedSkill.coinCount; i++) {
-        const roll = Math.random() * 100;
-        let isHead = roll < headChance;
+        setTimeout(() => {
+            const coinInner = document.getElementById(`coin-${i}`);
+            coinInner.classList.remove("spinning"); // หยุดแอนิเมชันหมุนเร็ว
 
-        if (isHead) {
-            currentPower += selectedSkill.coinBonus;
-            headsCount++;
-            detailsHTML += `เหรียญที่ ${i}: <span class="coin head">● หัว (Heads)</span> (+${selectedSkill.coinBonus})<br>`;
-        } else {
-            detailsHTML += `เหรียญที่ ${i}: <span class="coin tail">○ ก้อย (Tails)</span> (+0)<br>`;
-        }
+            const roll = Math.random() * 100;
+            let isHead = roll < headChance;
+
+            if (isHead) {
+                coinInner.style.transform = "rotateY(0deg)"; // หยุดที่หน้าหัว (ทอง)
+                currentPower += selectedSkill.coinBonus;
+                headsCount++;
+                detailsHTML += `เหรียญที่ ${i}: <span class="coin-text head-text">● หัว (Heads)</span> (+${selectedSkill.coinBonus})<br>`;
+            } else {
+                coinInner.style.transform = "rotateY(180deg)"; // หยุดที่หน้าก้อย (เงิน)
+                detailsHTML += `เหรียญที่ ${i}: <span class="coin-text tail-text">○ ก้อย (Tails)</span> (+0)<br>`;
+            }
+
+            // ถ้าเป็นเหรียญสุดท้าย ให้สรุปผลลัพธ์การต่อสู้ทั้งหมดออกมา
+            if (i === selectedSkill.coinCount) {
+                setTimeout(() => {
+                    document.getElementById("flavorText").innerText = selectedIdentity.flavor;
+                    document.getElementById("tossDetails").innerHTML = detailsHTML;
+                    document.getElementById("finalPowerResult").innerHTML = `พลังรวมสุดท้าย (Final Power): <span style="color:#ffeb3b;">${currentPower}</span><br><span style="font-size:14px; color:#aaa;">(ทอยได้หัวทั้งหมด ${headsCount} จาก ${selectedSkill.coinCount} เหรียญ)</span>`;
+                    document.getElementById("resultBox").style.display = "block";
+                    tossButton.disabled = false; // ปลดล็อคปุ่ม
+                }, 300);
+            }
+        }, i * 400); // ดีเลย์เพิ่มทีละ 0.4 วินาทีต่อหนึ่งเหรียญ
     }
-
-    // อัปเดต UI
-    document.getElementById("flavorText").innerText = selectedIdentity.flavor;
-    document.getElementById("tossDetails").innerHTML = detailsHTML;
-    document.getElementById("finalPowerResult").innerHTML = `พลังรวมสุดท้าย (Final Power): <span style="color:#ffeb3b;">${currentPower}</span><br><span style="font-size:14px; color:#aaa;">(ทอยได้หัวทั้งหมด ${headsCount} จาก ${selectedSkill.coinCount} เหรียญ)</span>`;
-    document.getElementById("resultBox").style.display = "block";
 }
 
-// รันฟังก์ชันเริ่มต้นเมื่อเปิดเว็บ
 updateSkillOptions();
