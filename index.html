@@ -59,20 +59,15 @@
 </head>
 <body>
 
-<div class="container">
-    <h1>MANAGER-NIM!!</h1>
-    <p class="subtitle">"Justice shall prevail!" - Don Quixote Simulator</p>
-    
-    <label for="identitySelect">เลือก Identity ของ Don Quixote:</label>
+<label for="identitySelect">เลือก Identity ของ Don Quixote:</label>
     <select id="identitySelect" onchange="updateSkillOptions()">
         <option value="wCorp">W Corp. L3 Cleanup Agent</option>
-        <option value="cinq">Cinq Association South Section 5 Director</option>
+        <option value="cinq">Cinq Assoc. Director</option>
+        <option value="middleSister">The Middle Little Sister</option>
+        <option value="lantern">Lantern E.G.Oist</option>
+        <option value="kCorp">K Corp. Class 3 Excision Staff</option>
         <option value="base">Shi Association South Section 5</option>
     </select>
-
-    <label for="skillSelect">เลือก Skill:</label>
-    <select id="skillSelect"></select>
-
     <label for="spInput">Sanity Point (SP) ของ Don (-45 ถึง 45):</label>
     <input type="number" id="spInput" value="45" min="-45" max="45">
 
