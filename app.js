@@ -1,33 +1,76 @@
-// ข้อมูลสกิลของ Don Quixote แต่ละ Identity
+// ข้อมูลสกิลของ Don Quixote ทั้งหมด (อัปเดตตัวละครเพิ่มแบบจุใจ)
 const donData = {
     wCorp: {
         name: "W Corp. L3 Cleanup Agent Don Quixote",
+        flavor: "“ชาร์จพลังสายฟ้าพร้อมตัดมิติ! วิ่งทะลวงไปเลย!”",
         skills: [
-            { name: "Overcharge", basePower: 3, coinBonus: 4, coinCount: 4 }, // สกิลทำดาเมจหลักสุดแรง
+            { name: "Overcharge", basePower: 3, coinBonus: 4, coinCount: 4 },
             { name: "Rip Space (Max Charge)", basePower: 1, coinBonus: 3, coinCount: 5 }
         ]
     },
     cinq: {
-        name: "Cinq Assoc. Director Don Quixote",
+        name: "Cinq Assoc. South Section 5 Director Don Quixote",
+        flavor: "“ข้าแต่ศัตรูผู้โง่เขลา! จงรับเพลงดาบเอเป้อันรวดเร็วของข้าไปเสีย!”",
         skills: [
             { name: "Salut", basePower: 4, coinBonus: 4, coinCount: 3 },
             { name: "Fleche", basePower: 6, coinBonus: 3, coinCount: 4 }
         ]
     },
-    base: {
-        name: "Shi Assoc. Don Quixote",
+    middleSister: {
+        name: "The Middle Little Sister Don Quixote",
+        flavor: "“ใครที่บังอาจทำให้พี่น้องของข้าต้องหลั่งน้ำตา... มันต้องถูกบันทึกในสมุดแค้น!”",
         skills: [
-            { name: "Boundary of Death", basePower: 1, coinBonus: 44, coinCount: 1 }, // แซวสกิลในตำนาน
+            { name: "Vengeance Fret", basePower: 3, coinBonus: 3, coinCount: 3 },
+            { name: "Trust the Book!", basePower: 4, coinBonus: 4, coinCount: 4 }
+        ]
+    },
+    lantern: {
+        name: "Lantern E.G.Oist Don Quixote",
+        flavor: "“ฮี่ๆ... กลิ่นเนื้อหอมๆ ในป่าใหญ่... ข้าจะกัดกินเจ้าให้หมดเลย!”",
+        skills: [
+            { name: "I'll Bite You", basePower: 5, coinBonus: 3, coinCount: 2 },
+            { name: "Be Quiet, Forest", basePower: 4, coinBonus: 4, coinCount: 3 }
+        ]
+    },
+    kCorp: {
+        name: "K Corp. Class 3 Excision Staff Don Quixote",
+        flavor: "“ด้วยพลังแห่งแอมพูลสีเขียวนี้! บาดแผลของข้าจะฟื้นฟูอย่างไร้ขีดจำกัด!”",
+        skills: [
+            { name: "HP Ampule Injection", basePower: 5, coinBonus: 2, coinCount: 2 },
+            { name: "Excision Protocol", basePower: 4, coinBonus: 3, coinCount: 3 }
+        ]
+    },
+    bladeLineage: {
+        name: "Blade Lineage Salsu Don Quixote",
+        flavor: "“เพลงดาบสังหารสไตล์ซัลซู... ข้าจะฟาดฟันเสื้อคลุมฮันบกนี้ให้สะบัด!”",
+        skills: [
+            { name: "Draw to the Hilt", basePower: 5, coinBonus: 2, coinCount: 2 },
+            { name: "Aching Feather", basePower: 4, coinBonus: 5, coinCount: 3 }
+        ]
+    },
+    tciAssoc: {
+        name: "TCI Association Section 4 Don Quixote",
+        flavor: "“ตรวจพบช่องโหว่ทางยุทธวิธีแล้วค่ะผู้จัดการ! กำลังดำเนินมาตรการขั้นเด็ดขาด!”",
+        skills: [
+            { name: "Focus Fire", basePower: 4, coinBonus: 3, coinCount: 3 },
+            { name: "Tactical Breakthrough", basePower: 3, coinBonus: 5, coinCount: 4 }
+        ]
+    },
+    base: {
+        name: "Shi Assoc. South Section 5 Don Quixote",
+        flavor: "“ถึงแม้ร่างกายจะเหนื่อยล้า... แต่ข้าจะก้าวข้ามขีดจำกัดแห่งความตาย!”",
+        skills: [
+            { name: "Boundary of Death", basePower: 1, coinBonus: 44, coinCount: 1 },
             { name: "Flashing Strike", basePower: 4, coinBonus: 4, coinCount: 3 }
         ]
     }
 };
 
-// ฟังก์ชันอัปเดตรายชื่อสกิลตาม Identity ที่เลือก
+// อัปเดตเมนูสกิลเมื่อเลือกตัวละคร
 function updateSkillOptions() {
     const identityKey = document.getElementById("identitySelect").value;
     const skillSelect = document.getElementById("skillSelect");
-    skillSelect.innerHTML = ""; // ล้างค่าเก่า
+    skillSelect.innerHTML = ""; 
 
     donData[identityKey].skills.forEach((skill, index) => {
         let option = document.createElement("option");
@@ -37,44 +80,44 @@ function updateSkillOptions() {
     });
 }
 
-// ฟังก์ชันจำลองการทอยเหรียญ
+// ระบบทอยเหรียญคำนวณพลัง
 function executeCoinToss() {
     const identityKey = document.getElementById("identitySelect").value;
     const skillIndex = document.getElementById("skillSelect").value;
     let sp = parseInt(document.getElementById("spInput").value);
 
-    // ป้องกันกรณีป้อนค่า SP เกินกำหนด
     if (sp > 45) sp = 45;
     if (sp < -45) sp = -45;
 
-    const selectedSkill = donData[identityKey].skills[skillIndex];
+    const selectedIdentity = donData[identityKey];
+    const selectedSkill = selectedIdentity.skills[skillIndex];
     
-    // คำนวณโอกาสออกหัว (Base 50% + SP% เช่น SP 45 จะมีโอกาสออกหัว 50 + 45 = 95%)
+    // โอกาสออกหัวคำนวณตามสูตรเกม (Base 50% + ค่า SP)
     const headChance = 50 + sp; 
 
     let currentPower = selectedSkill.basePower;
     let detailsHTML = "";
     let headsCount = 0;
 
-    // เริ่มทอยเหรียญทีละเหรียญ
     for (let i = 1; i <= selectedSkill.coinCount; i++) {
-        const roll = Math.random() * 100; // สุ่ม 0.00 - 99.99
+        const roll = Math.random() * 100;
         let isHead = roll < headChance;
 
         if (isHead) {
             currentPower += selectedSkill.coinBonus;
             headsCount++;
-            detailsHTML += `เหรียญที่ ${i}: <span class="coin head">หัว (Heads)</span> (+${selectedSkill.coinBonus})<br>`;
+            detailsHTML += `เหรียญที่ ${i}: <span class="coin head">● หัว (Heads)</span> (+${selectedSkill.coinBonus})<br>`;
         } else {
-            detailsHTML += `เหรียญที่ ${i}: <span class="coin tail">ก้อย (Tails)</span> (+0)<br>`;
+            detailsHTML += `เหรียญที่ ${i}: <span class="coin tail">○ ก้อย (Tails)</span> (+0)<br>`;
         }
     }
 
-    // แสดงผลลัพธ์บนหน้าเว็บ
+    // อัปเดต UI
+    document.getElementById("flavorText").innerText = selectedIdentity.flavor;
     document.getElementById("tossDetails").innerHTML = detailsHTML;
-    document.getElementById("finalPowerResult").innerHTML = `พลังโจมตีสุทธิ (Final Power): ${currentPower} (ออกหัว ${headsCount}/${selectedSkill.coinCount} เหรียญ)`;
+    document.getElementById("finalPowerResult").innerHTML = `พลังรวมสุดท้าย (Final Power): <span style="color:#ffeb3b;">${currentPower}</span><br><span style="font-size:14px; color:#aaa;">(ทอยได้หัวทั้งหมด ${headsCount} จาก ${selectedSkill.coinCount} เหรียญ)</span>`;
     document.getElementById("resultBox").style.display = "block";
 }
 
-// เรียกใช้งานครั้งแรกตอนโหลดหน้าเว็บ
+// รันฟังก์ชันเริ่มต้นเมื่อเปิดเว็บ
 updateSkillOptions();
