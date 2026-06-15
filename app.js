@@ -1,7 +1,8 @@
-// ข้อมูลสกิลของ Don 4 ตัวละครเด่น (ตัวละครละ 3 สกิลเต็มรูปแบบ)
+// ข้อมูลอัตลักษณ์ของ Don Quixote
 const donData = {
     wCorp: {
-        name: "W Corp. L3 Cleanup Agent Don Quixote",
+        name: "W Corp. L3 Cleanup Agent",
+        desc: "สายชาร์จพลังสายฟ้าและตัดมิติ ดาเมจเหรียญสุดท้ายแรงจัด",
         flavor: "“ตัดมิติและเคลียร์เส้นทาง! ชาร์จพลังสายฟ้าเต็มพิกัด!”",
         skills: [
             { name: "S1: Leap", basePower: 4, coinBonus: 2, coinCount: 2 },
@@ -10,7 +11,8 @@ const donData = {
         ]
     },
     cinq: {
-        name: "Cinq Assoc. Director Don Quixote",
+        name: "Cinq Assoc. South Section 5 Director",
+        desc: "เน้นความเร็วและการดวล 1v1 ทอยเหรียญเสถียรมาก",
         flavor: "“ข้าขอท้าดวลอย่างเป็นทางการ! จงรับการทิ่มแทงอันรวดเร็ว!”",
         skills: [
             { name: "S1: Attaque", basePower: 3, coinBonus: 3, coinCount: 2 },
@@ -19,7 +21,8 @@ const donData = {
         ]
     },
     middleSister: {
-        name: "The Middle Little Sister Don Quixote",
+        name: "The Middle Little Sister",
+        desc: "สายทุบทำลายล้างแค้น ยิ่งออกหัวยิ่งตึง",
         flavor: "“การลบหลู่ครอบครัวของข้า... โทษทัณฑ์ของมันคือความเจ็บปวด!”",
         skills: [
             { name: "S1: Vengeance Fret", basePower: 3, coinBonus: 3, coinCount: 3 },
@@ -28,8 +31,9 @@ const donData = {
         ]
     },
     base: {
-        name: "Shi Assoc. Don Quixote",
-        flavor: "“แม้ดาบจะบิ่นและแผลจะลึก แต่จิตวิญญาณแห่งอัศวินไม่เคยดับสิ้น!”",
+        name: "Shi Assoc. South Section 5",
+        desc: "สายก้าวข้ามความตาย สกิล 3 ทอยติดหัวคือจบชีวิตศัตรูได้ในคราเดียว",
+        flavor: "“ถึงแม้ร่างกายจะเหนื่อยล้า... แต่ข้าจะก้าวข้ามขีดจำกัดแห่งความตาย!”",
         skills: [
             { name: "S1: Extreme Edge", basePower: 4, coinBonus: 2, coinCount: 2 },
             { name: "S2: Flashing Strike", basePower: 4, coinBonus: 4, coinCount: 3 },
@@ -45,9 +49,64 @@ const enemyData = {
     windmill: { name: "ยักษ์กังหันลมในจินตนาการ (BOSS)", maxHp: 600, currentHp: 600 }
 };
 
+let selectedIdentityKey = "";
 let activeEnemyKey = "dummy";
 
-// ฟังก์ชันเปิด/ปิดเพลงธีม
+// สร้าง UI รายชื่อการ์ดตัวละครในหน้าแรก
+function initCharacterSelection() {
+    const grid = document.getElementById("identityGrid");
+    grid.innerHTML = "";
+    
+    Object.keys(donData).forEach(key => {
+        const card = document.createElement("div");
+        card.className = "identity-card";
+        card.id = `card-${key}`;
+        card.onclick = () => selectCharacter(key);
+        card.innerHTML = `
+            <h4>${donData[key].name}</h4>
+            <p>${donData[key].desc}</p>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+// ฟังก์ชันเลือกตัวละครเมื่อกดคลิกที่การ์ด
+function selectCharacter(key) {
+    selectedIdentityKey = key;
+    
+    // เคลียร์คลาสเก่าออกให้หมดก่อน
+    document.querySelectorAll(".identity-card").forEach(c => c.classList.remove("selected"));
+    
+    // ไฮไลต์การ์ดที่เลือกปัจจุบัน
+    document.getElementById(`card-${key}`).classList.add("selected");
+    
+    // เปิดให้กดปุ่มสู้ได้
+    document.getElementById("startBattleBtn").disabled = false;
+}
+
+// สลับหน้าจอไปหน้าสู้
+function goToBattleScreen() {
+    document.getElementById("selectScreen").classList.remove("active-screen");
+    document.getElementById("battleScreen").classList.add("active-screen");
+    
+    // ตั้งชื่อหัวเรื่องตัวละครที่ใช้
+    document.getElementById("activeCharacterTitle").innerText = `กำลังควบคุม: ${donData[selectedIdentityKey].name}`;
+    
+    // รีเซ็ตสติเริ่มต้นที่ 0 และล้างผลลัพธ์เก่า
+    document.getElementById("spInput").value = 0;
+    document.getElementById("resultBox").style.display = "none";
+    document.getElementById("coinStage").innerHTML = "";
+
+    updateSkillOptions();
+}
+
+// กลับไปหน้าเลือกตัวละคร
+function goToSelectScreen() {
+    document.getElementById("battleScreen").classList.remove("active-screen");
+    document.getElementById("selectScreen").classList.add("active-screen");
+}
+
+// เปิด/ปิดเพลงธีม
 function toggleMusic() {
     const music = document.getElementById("themeMusic");
     const btn = document.getElementById("musicBtn");
@@ -62,11 +121,11 @@ function toggleMusic() {
     }
 }
 
-// อัปเดตเมนูเมื่อเปลี่ยนศัตรู
+// สลับเป้าหมายศัตรู
 function changeEnemy() {
     activeEnemyKey = document.getElementById("enemySelect").value;
     const enemy = enemyData[activeEnemyKey];
-    enemy.currentHp = enemy.maxHp; // รีเซ็ตเลือดใหม่ตอนเลือก
+    enemy.currentHp = enemy.maxHp; 
     updateEnemyUI();
 }
 
@@ -79,11 +138,10 @@ function updateEnemyUI() {
 }
 
 function updateSkillOptions() {
-    const identityKey = document.getElementById("identitySelect").value;
     const skillSelect = document.getElementById("skillSelect");
     skillSelect.innerHTML = ""; 
 
-    donData[identityKey].skills.forEach((skill, index) => {
+    donData[selectedIdentityKey].skills.forEach((skill, index) => {
         let option = document.createElement("option");
         option.value = index;
         option.text = `${skill.name} (Base: ${skill.basePower} | Coin: +${skill.coinBonus} x ${skill.coinCount})`;
@@ -91,21 +149,22 @@ function updateSkillOptions() {
     });
 }
 
-// ฟังก์ชันต่อสู้และหมุนเหรียญ
+// ตรรกะระบบต่อสู้และทอยเหรียญ
 function executeCoinToss() {
-    const identityKey = document.getElementById("identitySelect").value;
     const skillIndex = document.getElementById("skillSelect").value;
     const tossButton = document.getElementById("tossButton");
+    const backBtn = document.getElementById("backBtn");
     let sp = parseInt(document.getElementById("spInput").value);
 
     if (sp > 45) sp = 45;
     if (sp < -45) sp = -45;
 
-    const selectedIdentity = donData[identityKey];
+    const selectedIdentity = donData[selectedIdentityKey];
     const selectedSkill = selectedIdentity.skills[skillIndex];
     const headChance = 50 + sp; 
 
     tossButton.disabled = true;
+    backBtn.disabled = true;
     document.getElementById("resultBox").style.display = "none";
     
     const coinStage = document.getElementById("coinStage");
@@ -147,19 +206,15 @@ function executeCoinToss() {
 
             if (i === selectedSkill.coinCount) {
                 setTimeout(() => {
-                    // คำนวณความเสียหายที่ทำได้จริง (พลังสุดท้าย x ตัวคูณโบนัสเหรียญหัว)
                     let totalDamage = currentPower * (1 + (headsCount * 0.2));
                     totalDamage = Math.floor(totalDamage);
 
-                    // หักเลือดมอนสเตอร์
                     const enemy = enemyData[activeEnemyKey];
                     enemy.currentHp -= totalDamage;
                     if (enemy.currentHp < 0) enemy.currentHp = 0;
                     
-                    // อัปเดต UI มอนสเตอร์
                     updateEnemyUI();
 
-                    // อัปเดตกล่องบันทึก
                     document.getElementById("flavorText").innerText = selectedIdentity.flavor;
                     document.getElementById("tossDetails").innerHTML = detailsHTML;
                     document.getElementById("finalPowerResult").innerHTML = `พลังรวมสุดท้าย (Final Power): ${currentPower}`;
@@ -172,12 +227,13 @@ function executeCoinToss() {
                     
                     document.getElementById("resultBox").style.display = "block";
                     tossButton.disabled = false;
+                    backBtn.disabled = false;
                 }, 300);
             }
         }, i * 400);
     }
 }
 
-// รันตั้งค่าเริ่มต้นตอนเปิดระบบ
-updateSkillOptions();
+// เริ่มต้นระบบ
+initCharacterSelection();
 updateEnemyUI();
