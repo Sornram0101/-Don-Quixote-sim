@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limbus Company: Don Quixote Skill Simulator</title>
+    <title>Limbus Company: Don Quixote Battle Sim</title>
     <style>
         body {
             background-color: #121212;
@@ -13,7 +13,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 650px;
+            max-width: 680px;
             margin: 0 auto;
             background-color: #1e1e1e;
             padding: 30px;
@@ -24,10 +24,17 @@
         h1 { color: #df2020; margin-bottom: 5px; letter-spacing: 2px; }
         p.subtitle { color: #aaa; font-style: italic; margin-top: 0; font-size: 14px; }
         
+        .control-panel {
+            text-align: left;
+            background: #151515;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
         label {
             display: block;
-            text-align: left;
-            margin-top: 15px;
+            margin-top: 10px;
             font-weight: bold;
             color: #ffeb3b;
         }
@@ -35,7 +42,7 @@
         select, input, button {
             width: 100%;
             padding: 12px;
-            margin: 8px 0;
+            margin: 6px 0;
             border-radius: 5px;
             border: 1px solid #444;
             background-color: #2a2a2a;
@@ -44,82 +51,66 @@
             box-sizing: border-box;
         }
         
-        button {
+        /* สไตล์บอร์ดแสดงสถานะศัตรู */
+        .enemy-board {
+            background: #261111;
+            border: 1px solid #ff4444;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .hp-bar-bg {
+            background: #444;
+            width: 100%;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        .hp-bar-fill {
+            background: #df2020;
+            width: 100%;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        /* ปุ่มเล่นเพลง */
+        .music-btn {
+            background-color: #00bcd4;
+            color: black;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .music-btn:hover { background-color: #008ba3; }
+
+        .btn-attack {
             background-color: #df2020;
             color: white;
             font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: 0.2s;
-            margin-top: 20px;
             font-size: 18px;
-            letter-spacing: 1px;
+            margin-top: 15px;
         }
-        button:hover { 
-            background-color: #b31616;
-            box-shadow: 0 0 10px rgba(223, 32, 32, 0.5);
-        }
-        button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
+        .btn-attack:hover { background-color: #b31616; }
+        button:disabled { background-color: #555; cursor: not-allowed; }
         
-        /* สไตล์โซนเหรียญอนิเมชัน */
         .coin-stage {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin: 20px 0;
-            min-height: 90px;
+            min-height: 80px;
             flex-wrap: wrap;
         }
         
         /* เหรียญ 3D */
-        .coin-wrapper {
-            perspective: 1000px;
-            width: 70px;
-            height: 70px;
-        }
-        .coin-inner {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.1s linear;
-        }
-        .coin-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-        }
-        .coin-front {
-            background: radial-gradient(circle, #ffe066 0%, #b38600 100%);
-            color: #4a3600;
-            border: 3px solid #ffcc00;
-        }
-        .coin-back {
-            background: radial-gradient(circle, #e0e0e0 0%, #757575 100%);
-            color: #212121;
-            border: 3px solid #bdbdbd;
-            transform: rotateY(180deg);
-        }
+        .coin-wrapper { perspective: 1000px; width: 65px; height: 65px; }
+        .coin-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.1s linear; }
+        .coin-face { position: absolute; width: 100%; height: 100%; border-radius: 50%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+        .coin-front { background: radial-gradient(circle, #ffe066 0%, #b38600 100%); color: #4a3600; border: 3px solid #ffcc00; }
+        .coin-back { background: radial-gradient(circle, #e0e0e0 0%, #757575 100%); color: #212121; border: 3px solid #bdbdbd; transform: rotateY(180deg); }
         
-        /* คลาสสิกอนิเมชันหมุน */
-        .spinning {
-            animation: spin 0.2s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
-        }
+        .spinning { animation: spin 0.2s linear infinite; }
+        @keyframes spin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
 
         .result-box {
             margin-top: 25px;
@@ -134,44 +125,58 @@
         .coin-text { font-weight: bold; }
         .head-text { color: #4caf50; }
         .tail-text { color: #f44336; }
-        .final-power { font-size: 22px; color: #ffeb3b; font-weight: bold; margin-top: 15px; border-top: 1px dashed #444; padding-top: 10px; }
+        .final-power { font-size: 20px; color: #ffeb3b; font-weight: bold; margin-top: 10px; }
         .flavor-text { color: #00bcd4; font-style: italic; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>MANAGER-NIM!!</h1>
-    <p class="subtitle">"Justice and righteousness shall pierce through the darkness!" - Don Quixote</p>
+    <h1>DON QUIXOTE BATTLE SIM</h1>
+    <p class="subtitle">"For Justice, for the Dream, Charge forward!!"</p>
     
-    <label for="identitySelect">เลือก อัตลักษณ์ (Identity) ของ Don Quixote:</label>
-    <select id="identitySelect" onchange="updateSkillOptions()">
-        <option value="wCorp">W Corp. L3 Cleanup Agent</option>
-        <option value="cinq">Cinq Assoc. South Section 5 Director</option>
-        <option value="middleSister">The Middle Little Sister</option>
-        <option value="lantern">Lantern E.G.Oist</option>
-        <option value="kCorp">K Corp. Class 3 Excision Staff</option>
-        <option value="bladeLineage">Blade Lineage Salsu</option>
-        <option value="tciAssoc">TCI Association Section 4</option>
-        <option value="base">Shi Association South Section 5</option>
-    </select>
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵 PLAY BATTLE THEME</button>
+    <audio id="themeMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
-    <label for="skillSelect">เลือก สกิล (Skill):</label>
-    <select id="skillSelect"></select>
+    <div class="enemy-board">
+        <label for="enemySelect">🎯 เลือกศัตรูที่ต้องการต่อสู้:</label>
+        <select id="enemySelect" onchange="changeEnemy()">
+            <option value="dummy">หุ่นซ้อมรบธรรมดา (HP: 100)</option>
+            <option value="pequod">ลูกเรือ Pequod Town (HP: 250)</option>
+            <option value="windmill">ยักษ์กังหันลมในจินตนาการ (BOSS) (HP: 600)</option>
+        </select>
+        <h3 id="enemyName" style="margin-bottom: 5px; color: #ff4444;">ศัตรู: หุ่นซ้อมรบธรรมดา</h3>
+        <div>HP: <span id="enemyHpText">100 / 100</span></div>
+        <div class="hp-bar-bg"><div class="hp-bar-fill" id="hpBar"></div></div>
+    </div>
 
-    <label for="spInput">ค่าสติ (Sanity Point / SP) [-45 ถึง 45]:</label>
-    <input type="number" id="spInput" value="45" min="-45" max="45">
+    <div class="control-panel">
+        <label for="identitySelect">อัศวิน Don Quixote:</label>
+        <select id="identitySelect" onchange="updateSkillOptions()">
+            <option value="wCorp">W Corp. L3 Cleanup Agent</option>
+            <option value="cinq">Cinq Assoc. South Section 5 Director</option>
+            <option value="middleSister">The Middle Little Sister</option>
+            <option value="base">Shi Association South Section 5</option>
+        </select>
 
-    <button id="tossButton" onclick="executeCoinToss()">USE SKILL! ⚔️</button>
+        <label for="skillSelect">เลือกสกิลโจมตี (เพิ่มเป็น 3 สกิล):</label>
+        <select id="skillSelect"></select>
+
+        <label for="spInput">ค่าสติ (Sanity Point / SP) [-45 ถึง 45]:</label>
+        <input type="number" id="spInput" value="45" min="-45" max="45">
+    </div>
+
+    <button class="btn-attack" id="tossButton" onclick="executeCoinToss()">ATTACKศัตรู! ⚔️</button>
 
     <div class="coin-stage" id="coinStage"></div>
 
     <div id="resultBox" class="result-box">
-        <h3>[ คัมภีร์บันทึกการต่อสู้ ]</h3>
+        <h3>[ บันทึกการปะทะ ]</h3>
         <p id="flavorText" class="flavor-text"></p>
         <hr style="border-color: #222;">
         <p id="tossDetails"></p>
         <p id="finalPowerResult" class="final-power"></p>
+        <p id="damageResult" style="color: #ff4444; font-weight: bold; font-size: 18px;"></p>
     </div>
 </div>
 
