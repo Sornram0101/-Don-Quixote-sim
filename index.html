@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limbus Company: Don Quixote Skill Simulator</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #df2020; /* สีแดงสไตล์ Limbus */
+            box-shadow: 0 4px 15px rgba(223, 32, 32, 0.3);
+        }
+        h1 { color: #df2020; margin-bottom: 5px; }
+        p.subtitle { color: #888; font-style: italic; margin-top: 0; }
+        select, input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #df2020;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+        button:hover { background-color: #b31616; }
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #111;
+            border-left: 5px solid #df2020;
+            text-align: left;
+            display: none;
+        }
+        .coin { font-weight: bold; }
+        .head { color: #4caf50; } /* หัว = เขียว */
+        .tail { color: #f44336; } /* ก้อย = แดง */
+        .final-power { font-size: 20px; color: #ffeb3b; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>MANAGER-NIM!!</h1>
+    <p class="subtitle">"Justice shall prevail!" - Don Quixote Simulator</p>
+    
+    <label for="identitySelect">เลือก Identity ของ Don Quixote:</label>
+    <select id="identitySelect" onchange="updateSkillOptions()">
+        <option value="wCorp">W Corp. L3 Cleanup Agent</option>
+        <option value="cinq">Cinq Association South Section 5 Director</option>
+        <option value="base">Shi Association South Section 5</option>
+    </select>
+
+    <label for="skillSelect">เลือก Skill:</label>
+    <select id="skillSelect"></select>
+
+    <label for="spInput">Sanity Point (SP) ของ Don (-45 ถึง 45):</label>
+    <input type="number" id="spInput" value="45" min="-45" max="45">
+
+    <button onclick="executeCoinToss()">USE SKILL!</button>
+
+    <div id="resultBox" class="result-box">
+        <h3>ผลลัพธ์การโจมตี:</h3>
+        <p id="tossDetails"></p>
+        <p id="finalPowerResult" class="final-power"></p>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
