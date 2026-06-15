@@ -129,3 +129,31 @@
             <div>HP: <span id="enemyHpText">100 / 100</span></div>
             <div class="hp-bar-bg"><div class="hp-bar-fill" id="hpBar"></div></div>
         </div>
+
+        <div class="control-panel">
+            <label for="skillSelect">เลือกสกิลใช้งาน:</label>
+            <select id="skillSelect"></select>
+
+            <label for="spInput">ค่าสติ (Sanity Point / SP) [-45 ถึง 45]:</label>
+            <input type="number" id="spInput" value="0" min="-45" max="45">
+        </div>
+
+        <button class="btn-action" id="tossButton" onclick="executeCoinToss()">ATTACKศัตรู! ⚔️</button>
+        <button class="btn-back" id="backBtn" onclick="goToSelectScreen()">◀ เปลี่ยนตัวละคร</button>
+
+        <div class="coin-stage" id="coinStage"></div>
+
+        <div id="resultBox" class="result-box">
+            <h3>[ บันทึกการปะทะ ]</h3>
+            <p id="flavorText" class="flavor-text"></p>
+            <hr style="border-color: #222;">
+            <p id="tossDetails"></p>
+            <p id="finalPowerResult" class="final-power"></p>
+            <p id="damageResult" style="color: #ff4444; font-weight: bold; font-size: 18px;"></p>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
