@@ -1,69 +1,82 @@
+// ข้อมูลสกิลของ Don 4 ตัวละครเด่น (ตัวละครละ 3 สกิลเต็มรูปแบบ)
 const donData = {
     wCorp: {
         name: "W Corp. L3 Cleanup Agent Don Quixote",
-        flavor: "“ชาร์จพลังสายฟ้าพร้อมตัดมิติ! วิ่งทะลวงไปเลย!”",
+        flavor: "“ตัดมิติและเคลียร์เส้นทาง! ชาร์จพลังสายฟ้าเต็มพิกัด!”",
         skills: [
-            { name: "Overcharge", basePower: 3, coinBonus: 4, coinCount: 4 },
-            { name: "Rip Space (Max Charge)", basePower: 1, coinBonus: 3, coinCount: 5 }
+            { name: "S1: Leap", basePower: 4, coinBonus: 2, coinCount: 2 },
+            { name: "S2: Overcharge", basePower: 3, coinBonus: 4, coinCount: 4 },
+            { name: "S3: Rip Space (MAX)", basePower: 1, coinBonus: 3, coinCount: 5 }
         ]
     },
     cinq: {
-        name: "Cinq Assoc. South Section 5 Director Don Quixote",
-        flavor: "“ข้าแต่ศัตรูผู้โง่เขลา! จงรับเพลงดาบเอเป้อันรวดเร็วของข้าไปเสีย!”",
+        name: "Cinq Assoc. Director Don Quixote",
+        flavor: "“ข้าขอท้าดวลอย่างเป็นทางการ! จงรับการทิ่มแทงอันรวดเร็ว!”",
         skills: [
-            { name: "Salut", basePower: 4, coinBonus: 4, coinCount: 3 },
-            { name: "Fleche", basePower: 6, coinBonus: 3, coinCount: 4 }
+            { name: "S1: Attaque", basePower: 3, coinBonus: 3, coinCount: 2 },
+            { name: "S2: Salut", basePower: 4, coinBonus: 4, coinCount: 3 },
+            { name: "S3: Fleche", basePower: 6, coinBonus: 3, coinCount: 4 }
         ]
     },
     middleSister: {
         name: "The Middle Little Sister Don Quixote",
-        flavor: "“ใครที่บังอาจทำให้พี่น้องของข้าต้องหลั่งน้ำตา... มันต้องถูกบันทึกในสมุดแค้น!”",
+        flavor: "“การลบหลู่ครอบครัวของข้า... โทษทัณฑ์ของมันคือความเจ็บปวด!”",
         skills: [
-            { name: "Vengeance Fret", basePower: 3, coinBonus: 3, coinCount: 3 },
-            { name: "Trust the Book!", basePower: 4, coinBonus: 4, coinCount: 4 }
-        ]
-    },
-    lantern: {
-        name: "Lantern E.G.Oist Don Quixote",
-        flavor: "“ฮี่ๆ... กลิ่นเนื้อหอมๆ ในป่าใหญ่... ข้าจะกัดกินเจ้าให้หมดเลย!”",
-        skills: [
-            { name: "I'll Bite You", basePower: 5, coinBonus: 3, coinCount: 2 },
-            { name: "Be Quiet, Forest", basePower: 4, coinBonus: 4, coinCount: 3 }
-        ]
-    },
-    kCorp: {
-        name: "K Corp. Class 3 Excision Staff Don Quixote",
-        flavor: "“ด้วยพลังแห่งแอมพูลสีเขียวนี้! บาดแผลของข้าจะฟื้นฟูอย่างไร้ขีดจำกัด!”",
-        skills: [
-            { name: "HP Ampule Injection", basePower: 5, coinBonus: 2, coinCount: 2 },
-            { name: "Excision Protocol", basePower: 4, coinBonus: 3, coinCount: 3 }
-        ]
-    },
-    bladeLineage: {
-        name: "Blade Lineage Salsu Don Quixote",
-        flavor: "“เพลงดาบสังหารสไตล์ซัลซู... ข้าจะฟาดฟันเสื้อคลุมฮันบกนี้ให้สะบัด!”",
-        skills: [
-            { name: "Draw to the Hilt", basePower: 5, coinBonus: 2, coinCount: 2 },
-            { name: "Aching Feather", basePower: 4, coinBonus: 5, coinCount: 3 }
-        ]
-    },
-    tciAssoc: {
-        name: "TCI Association Section 4 Don Quixote",
-        flavor: "“ตรวจพบช่องโหว่ทางยุทธวิธีแล้วค่ะผู้จัดการ! กำลังดำเนินมาตรการขั้นเด็ดขาด!”",
-        skills: [
-            { name: "Focus Fire", basePower: 4, coinBonus: 3, coinCount: 3 },
-            { name: "Tactical Breakthrough", basePower: 3, coinBonus: 5, coinCount: 4 }
+            { name: "S1: Vengeance Fret", basePower: 3, coinBonus: 3, coinCount: 3 },
+            { name: "S2: Trust the Book!", basePower: 4, coinBonus: 4, coinCount: 4 },
+            { name: "S3: Claim Their Sins", basePower: 5, coinBonus: 5, coinCount: 3 }
         ]
     },
     base: {
-        name: "Shi Assoc. South Section 5 Don Quixote",
-        flavor: "“ถึงแม้ร่างกายจะเหนื่อยล้า... แต่ข้าจะก้าวข้ามขีดจำกัดแห่งความตาย!”",
+        name: "Shi Assoc. Don Quixote",
+        flavor: "“แม้ดาบจะบิ่นและแผลจะลึก แต่จิตวิญญาณแห่งอัศวินไม่เคยดับสิ้น!”",
         skills: [
-            { name: "Boundary of Death", basePower: 1, coinBonus: 44, coinCount: 1 },
-            { name: "Flashing Strike", basePower: 4, coinBonus: 4, coinCount: 3 }
+            { name: "S1: Extreme Edge", basePower: 4, coinBonus: 2, coinCount: 2 },
+            { name: "S2: Flashing Strike", basePower: 4, coinBonus: 4, coinCount: 3 },
+            { name: "S3: Boundary of Death", basePower: 1, coinBonus: 44, coinCount: 1 }
         ]
     }
 };
+
+// ข้อมูลมอนสเตอร์ศัตรู
+const enemyData = {
+    dummy: { name: "หุ่นซ้อมรบธรรมดา", maxHp: 100, currentHp: 100 },
+    pequod: { name: "ลูกเรือ Pequod Town", maxHp: 250, currentHp: 250 },
+    windmill: { name: "ยักษ์กังหันลมในจินตนาการ (BOSS)", maxHp: 600, currentHp: 600 }
+};
+
+let activeEnemyKey = "dummy";
+
+// ฟังก์ชันเปิด/ปิดเพลงธีม
+function toggleMusic() {
+    const music = document.getElementById("themeMusic");
+    const btn = document.getElementById("musicBtn");
+    if (music.paused) {
+        music.play();
+        btn.innerText = "⏸️ PAUSE BATTLE THEME";
+        btn.style.backgroundColor = "#ff9800";
+    } else {
+        music.pause();
+        btn.style.backgroundColor = "#00bcd4";
+        btn.innerText = "🎵 PLAY BATTLE THEME";
+    }
+}
+
+// อัปเดตเมนูเมื่อเปลี่ยนศัตรู
+function changeEnemy() {
+    activeEnemyKey = document.getElementById("enemySelect").value;
+    const enemy = enemyData[activeEnemyKey];
+    enemy.currentHp = enemy.maxHp; // รีเซ็ตเลือดใหม่ตอนเลือก
+    updateEnemyUI();
+}
+
+function updateEnemyUI() {
+    const enemy = enemyData[activeEnemyKey];
+    document.getElementById("enemyName").innerText = `ศัตรู: ${enemy.name}`;
+    document.getElementById("enemyHpText").innerText = `${enemy.currentHp} / ${enemy.maxHp}`;
+    const percent = (enemy.currentHp / enemy.maxHp) * 100;
+    document.getElementById("hpBar").style.width = `${percent}%`;
+}
 
 function updateSkillOptions() {
     const identityKey = document.getElementById("identitySelect").value;
@@ -78,7 +91,7 @@ function updateSkillOptions() {
     });
 }
 
-// ฟังก์ชันหลักที่เพิ่มระบบแอนิเมชันหมุนเหรียญ
+// ฟังก์ชันต่อสู้และหมุนเหรียญ
 function executeCoinToss() {
     const identityKey = document.getElementById("identitySelect").value;
     const skillIndex = document.getElementById("skillSelect").value;
@@ -92,14 +105,12 @@ function executeCoinToss() {
     const selectedSkill = selectedIdentity.skills[skillIndex];
     const headChance = 50 + sp; 
 
-    // ล็อคปุ่มไม่ให้กดซ้ำระหว่างหมุน
     tossButton.disabled = true;
     document.getElementById("resultBox").style.display = "none";
     
     const coinStage = document.getElementById("coinStage");
-    coinStage.innerHTML = ""; // ล้างเหรียญเก่า
+    coinStage.innerHTML = ""; 
 
-    // สร้าง Element เหรียญหมุนจำลองบนหน้าจอ
     for (let i = 1; i <= selectedSkill.coinCount; i++) {
         const coinWrapper = document.createElement("div");
         coinWrapper.className = "coin-wrapper";
@@ -116,37 +127,57 @@ function executeCoinToss() {
     let detailsHTML = "";
     let headsCount = 0;
 
-    // ค่อยๆ หยุดหมุนทีละเหรียญแบบมีดีเลย์สไตล์เกม
     for (let i = 1; i <= selectedSkill.coinCount; i++) {
         setTimeout(() => {
             const coinInner = document.getElementById(`coin-${i}`);
-            coinInner.classList.remove("spinning"); // หยุดแอนิเมชันหมุนเร็ว
+            coinInner.classList.remove("spinning");
 
             const roll = Math.random() * 100;
             let isHead = roll < headChance;
 
             if (isHead) {
-                coinInner.style.transform = "rotateY(0deg)"; // หยุดที่หน้าหัว (ทอง)
+                coinInner.style.transform = "rotateY(0deg)";
                 currentPower += selectedSkill.coinBonus;
                 headsCount++;
                 detailsHTML += `เหรียญที่ ${i}: <span class="coin-text head-text">● หัว (Heads)</span> (+${selectedSkill.coinBonus})<br>`;
             } else {
-                coinInner.style.transform = "rotateY(180deg)"; // หยุดที่หน้าก้อย (เงิน)
+                coinInner.style.transform = "rotateY(180deg)";
                 detailsHTML += `เหรียญที่ ${i}: <span class="coin-text tail-text">○ ก้อย (Tails)</span> (+0)<br>`;
             }
 
-            // ถ้าเป็นเหรียญสุดท้าย ให้สรุปผลลัพธ์การต่อสู้ทั้งหมดออกมา
             if (i === selectedSkill.coinCount) {
                 setTimeout(() => {
+                    // คำนวณความเสียหายที่ทำได้จริง (พลังสุดท้าย x ตัวคูณโบนัสเหรียญหัว)
+                    let totalDamage = currentPower * (1 + (headsCount * 0.2));
+                    totalDamage = Math.floor(totalDamage);
+
+                    // หักเลือดมอนสเตอร์
+                    const enemy = enemyData[activeEnemyKey];
+                    enemy.currentHp -= totalDamage;
+                    if (enemy.currentHp < 0) enemy.currentHp = 0;
+                    
+                    // อัปเดต UI มอนสเตอร์
+                    updateEnemyUI();
+
+                    // อัปเดตกล่องบันทึก
                     document.getElementById("flavorText").innerText = selectedIdentity.flavor;
                     document.getElementById("tossDetails").innerHTML = detailsHTML;
-                    document.getElementById("finalPowerResult").innerHTML = `พลังรวมสุดท้าย (Final Power): <span style="color:#ffeb3b;">${currentPower}</span><br><span style="font-size:14px; color:#aaa;">(ทอยได้หัวทั้งหมด ${headsCount} จาก ${selectedSkill.coinCount} เหรียญ)</span>`;
+                    document.getElementById("finalPowerResult").innerHTML = `พลังรวมสุดท้าย (Final Power): ${currentPower}`;
+                    
+                    if(enemy.currentHp === 0) {
+                        document.getElementById("damageResult").innerHTML = `💥 โจมตีแรงกระแทก ${totalDamage} ดาเมจ! <br>🎉 ศัตรูพ่ายแพ้ราบคาบด้วยพลังแห่งความยุติธรรม!`;
+                    } else {
+                        document.getElementById("damageResult").innerHTML = `💥 สร้างความเสียหาย ${totalDamage} ดาเมจ แก่ศัตรู!`;
+                    }
+                    
                     document.getElementById("resultBox").style.display = "block";
-                    tossButton.disabled = false; // ปลดล็อคปุ่ม
+                    tossButton.disabled = false;
                 }, 300);
             }
-        }, i * 400); // ดีเลย์เพิ่มทีละ 0.4 วินาทีต่อหนึ่งเหรียญ
+        }, i * 400);
     }
 }
 
+// รันตั้งค่าเริ่มต้นตอนเปิดระบบ
 updateSkillOptions();
+updateEnemyUI();
