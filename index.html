@@ -24,11 +24,9 @@
         h1 { color: #df2020; margin-bottom: 5px; letter-spacing: 2px; }
         p.subtitle { color: #aaa; font-style: italic; margin-top: 0; font-size: 14px; }
         
-        /* สไตล์หน้าจอแยก */
         .screen { display: none; }
         .active-screen { display: block; }
 
-        /* การ์ดเลือกตัวละคร */
         .identity-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -65,8 +63,21 @@
         }
         
         label { display: block; margin-top: 10px; font-weight: bold; color: #ffeb3b; }
-        select, input, button { width: 100%; padding: 12px; margin: 6px 0; border-radius: 5px; border: 1px solid #444; background-color: #2a2a2a; color: white; font-size: 16px; box-sizing: border-box; }
+        select, button { width: 100%; padding: 12px; margin: 6px 0; border-radius: 5px; border: 1px solid #444; background-color: #2a2a2a; color: white; font-size: 16px; box-sizing: border-box; }
         
+        /* แผงแสดงสถานะตัวละครและการสะสมสติ */
+        .status-display {
+            display: flex;
+            justify-content: space-between;
+            background: #1a2a1a;
+            border: 1px solid #4caf50;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .sp-value { color: #4caf50; font-size: 18px; }
+
         .enemy-board { background: #261111; border: 1px solid #ff4444; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;}
         .hp-bar-bg { background: #444; width: 100%; height: 20px; border-radius: 10px; overflow: hidden; margin-top: 5px; }
         .hp-bar-fill { background: #df2020; width: 100%; height: 100%; transition: width 0.3s ease; }
@@ -109,14 +120,13 @@
     <div id="selectScreen" class="screen active-screen">
         <p class="subtitle">"จงเลือกอัตลักษณ์ (Identity) ของดอนกิฮอเต้เพื่อเข้าสู่ภารกิจ"</p>
         
-        <div class="identity-grid" id="identityGrid">
-            </div>
+        <div class="identity-grid" id="identityGrid"></div>
 
         <button class="btn-action" id="startBattleBtn" onclick="goToBattleScreen()" disabled>DEPLOY SINNER (เข้าสู่สมรภูมิ)</button>
     </div>
 
     <div id="battleScreen" class="screen">
-        <p class="subtitle" id="activeCharacterTitle">W Corp. Don Quixote - กำลังรบ</p>
+        <p class="subtitle" id="activeCharacterTitle">กำลังรบ</p>
 
         <div class="enemy-board">
             <label for="enemySelect">🎯 เป้าหมายภารกิจ:</label>
@@ -131,14 +141,16 @@
         </div>
 
         <div class="control-panel">
+            <div class="status-display">
+                <span>Sanity Point (SP) ปัจจุบัน:</span>
+                <span class="sp-value" id="spDisplay">0</span>
+            </div>
+
             <label for="skillSelect">เลือกสกิลใช้งาน:</label>
             <select id="skillSelect"></select>
-
-            <label for="spInput">ค่าสติ (Sanity Point / SP) [-45 ถึง 45]:</label>
-            <input type="number" id="spInput" value="0" min="-45" max="45">
         </div>
 
-        <button class="btn-action" id="tossButton" onclick="executeCoinToss()">ATTACKศัตรู! ⚔️</button>
+        <button class="btn-action" id="tossButton" onclick="executeCoinToss()">ATTACKศัตรู! ⚔></button>
         <button class="btn-back" id="backBtn" onclick="goToSelectScreen()">◀ เปลี่ยนตัวละคร</button>
 
         <div class="coin-stage" id="coinStage"></div>
