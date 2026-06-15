@@ -13,20 +13,29 @@
             padding: 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             background-color: #1e1e1e;
             padding: 30px;
             border-radius: 10px;
-            border: 2px solid #df2020; /* สีแดงสไตล์ Limbus */
+            border: 2px solid #df2020; /* แดงเอกลักษณ์ของ Limbus */
             box-shadow: 0 4px 15px rgba(223, 32, 32, 0.3);
         }
-        h1 { color: #df2020; margin-bottom: 5px; }
-        p.subtitle { color: #888; font-style: italic; margin-top: 0; }
+        h1 { color: #df2020; margin-bottom: 5px; letter-spacing: 2px; }
+        p.subtitle { color: #aaa; font-style: italic; margin-top: 0; font-size: 14px; }
+        
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #ffeb3b;
+        }
+        
         select, input, button {
             width: 100%;
             padding: 12px;
-            margin: 10px 0;
+            margin: 8px 0;
             border-radius: 5px;
             border: 1px solid #444;
             background-color: #2a2a2a;
@@ -34,6 +43,7 @@
             font-size: 16px;
             box-sizing: border-box;
         }
+        
         button {
             background-color: #df2020;
             color: white;
@@ -41,40 +51,62 @@
             cursor: pointer;
             border: none;
             transition: 0.2s;
+            margin-top: 20px;
+            font-size: 18px;
+            letter-spacing: 1px;
         }
-        button:hover { background-color: #b31616; }
+        button:hover { 
+            background-color: #b31616;
+            box-shadow: 0 0 10px rgba(223, 32, 32, 0.5);
+        }
+        
         .result-box {
             margin-top: 25px;
-            padding: 15px;
-            background-color: #111;
+            padding: 20px;
+            background-color: #0b0b0b;
             border-left: 5px solid #df2020;
             text-align: left;
             display: none;
+            border-radius: 0 10px 10px 0;
         }
+        
         .coin { font-weight: bold; }
-        .head { color: #4caf50; } /* หัว = เขียว */
-        .tail { color: #f44336; } /* ก้อย = แดง */
-        .final-power { font-size: 20px; color: #ffeb3b; font-weight: bold; }
+        .head { color: #4caf50; text-shadow: 0 0 5px rgba(76, 175, 80, 0.5); } /* หัว = เขียว */
+        .tail { color: #f44336; text-shadow: 0 0 5px rgba(244, 67, 54, 0.5); } /* ก้อย = แดง */
+        .final-power { font-size: 22px; color: #ffeb3b; font-weight: bold; margin-top: 15px; border-top: 1px dashed #444; padding-top: 10px; }
+        .flavor-text { color: #00bcd4; font-style: italic; font-size: 14px; }
     </style>
 </head>
 <body>
 
-<label for="identitySelect">เลือก Identity ของ Don Quixote:</label>
+<div class="container">
+    <h1>MANAGER-NIM!!</h1>
+    <p class="subtitle">"Justice and righteousness shall pierce through the darkness!" - Don Quixote</p>
+    
+    <label for="identitySelect">เลือก อัตลักษณ์ (Identity) ของ Don Quixote:</label>
     <select id="identitySelect" onchange="updateSkillOptions()">
         <option value="wCorp">W Corp. L3 Cleanup Agent</option>
-        <option value="cinq">Cinq Assoc. Director</option>
+        <option value="cinq">Cinq Assoc. South Section 5 Director</option>
         <option value="middleSister">The Middle Little Sister</option>
         <option value="lantern">Lantern E.G.Oist</option>
         <option value="kCorp">K Corp. Class 3 Excision Staff</option>
+        <option value="bladeLineage">Blade Lineage Salsu</option>
+        <option value="tciAssoc">TCI Association Section 4</option>
         <option value="base">Shi Association South Section 5</option>
     </select>
-    <label for="spInput">Sanity Point (SP) ของ Don (-45 ถึง 45):</label>
+
+    <label for="skillSelect">เลือก สกิล (Skill):</label>
+    <select id="skillSelect"></select>
+
+    <label for="spInput">ค่าสติ (Sanity Point / SP) [-45 ถึง 45]:</label>
     <input type="number" id="spInput" value="45" min="-45" max="45">
 
-    <button onclick="executeCoinToss()">USE SKILL!</button>
+    <button onclick="executeCoinToss()">USE SKILL! ⚔️</button>
 
     <div id="resultBox" class="result-box">
-        <h3>ผลลัพธ์การโจมตี:</h3>
+        <h3>[ คัมภีร์บันทึกการต่อสู้ ]</h3>
+        <p id="flavorText" class="flavor-text"></p>
+        <hr style="border-color: #222;">
         <p id="tossDetails"></p>
         <p id="finalPowerResult" class="final-power"></p>
     </div>
