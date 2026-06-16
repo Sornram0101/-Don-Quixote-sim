@@ -34,7 +34,7 @@ const donData = {
     },
     base: {
         name: "Shi Assoc. South Section 5",
-        desc: "สายก้าวข้ามความตาย ร่างกายอ่อนล้าทำให้สติขึ้นช้า (สติเพิ่มขึ้น +8 ต่อการตี)",
+        desc: "สายก้ามข้ามความตาย ร่างกายอ่อนล้าทำให้สติขึ้นช้า (สติเพิ่มขึ้น +8 ต่อการตี)",
         flavor: "“ถึงแม้ร่างกายจะเหนื่อยล้า... แต่ข้าจะก้าวข้ามขีดจำกัดแห่งความตาย!”",
         spGain: 8,
         skills: [
@@ -100,12 +100,12 @@ function toggleMusic() {
     const btn = document.getElementById("musicBtn");
     if (music.paused) {
         music.play();
-        btn.innerText = "⏸️ PAUSE THEME: HERO";
+        btn.innerText = "⏸️ PAUSE THEME: \"HERO\"";
         btn.style.backgroundColor = "#ff9800";
     } else {
         music.pause();
-        btn.style.backgroundColor = "#ffe066";
-        btn.innerText = "🎠 PLAY THEME: HERO";
+        btn.style.backgroundColor = "#ff4500";
+        btn.innerText = "🔥 PLAY THEME: \"HERO\" (DON QUIXOTE)";
     }
 }
 
@@ -209,10 +209,10 @@ function executeCoinToss() {
                     document.getElementById("tossDetails").innerHTML = detailsHTML;
                     document.getElementById("finalPowerResult").innerHTML = `พลังรวมสุดท้าย (Final Power): ${currentPower}`;
                     
-                    let spGainText = `<br><span style="color: #4caf50; font-size:14px;">(เพื่อความยุติธรรม! ค่าสติเพิ่มขึ้น +${selectedIdentity.spGain} SP จากการต่อสู้)</span>`;
+                    let spGainText = `<br><span style="color: #4caf50; font-size:14px;">(จิตวิญญาณอัศวินตื่นรู้! ค่าสติเพิ่มขึ้น +${selectedIdentity.spGain} SP)</span>`;
                     
                     if(enemy.currentHp === 0) {
-                        document.getElementById("damageResult").innerHTML = `💥 โจมตีแรงกระแทก ${totalDamage} ดาเมจ! ${spGainText} <br>🎉 ศัตรูพ่ายแพ้ราบคาบด้วยพลังแห่งอัศวินและบทเพลง HERO!`;
+                        document.getElementById("damageResult").innerHTML = `💥 โจมตีแรงกระแทก ${totalDamage} ดาเมจ! ${spGainText} <br>🎉 "ศัตรูพ่ายแพ้ราบคาบ! บทเพลงแห่ง HERO ได้ขับขานเพื่อความยุติธรรมแล้ว!"`;
                     } else {
                         document.getElementById("damageResult").innerHTML = `💥 สร้างความเสียหาย ${totalDamage} ดาเมจ แก่ศัตรู! ${spGainText}`;
                     }
