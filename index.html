@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limbus Company: Don Quixote Combat Mission</title>
+    <title>Limbus Company: Don Quixote [HERO] Battle Mission</title>
     <style>
         body {
             background-color: #121212;
@@ -81,8 +81,9 @@
         .hp-bar-bg { background: #444; width: 100%; height: 20px; border-radius: 10px; overflow: hidden; margin-top: 5px; }
         .hp-bar-fill { background: #df2020; width: 100%; height: 100%; transition: width 0.3s ease; }
 
-        .music-btn { background-color: #ffe066; color: black; font-weight: bold; margin-bottom: 15px; border: 2px solid #b38600; box-shadow: 0 0 10px rgba(255, 224, 102, 0.4); }
-        .music-btn:hover { background-color: #ffcc00; }
+        /* ปรับธีมปุ่มให้แมตช์กับเพลง HERO */
+        .music-btn { background-color: #ff4500; color: white; font-weight: bold; margin-bottom: 15px; border: 2px solid #ffcc00; box-shadow: 0 0 15px rgba(255, 69, 0, 0.6); letter-spacing: 1px; }
+        .music-btn:hover { background-color: #e03e00; box-shadow: 0 0 20px rgba(255, 69, 0, 0.9); }
 
         .btn-action { background-color: #df2020; color: white; font-weight: bold; font-size: 18px; margin-top: 15px; border: none; cursor: pointer;}
         .btn-action:hover { background-color: #b31616; }
@@ -113,8 +114,8 @@
 <div class="container">
     <h1>L_B_C: DON QUIXOTE BATTLE</h1>
     
-    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎠 PLAY THEME: HERO</button>
-    <audio id="themeMusic" loop src="https://scummbar.com/mi2/MI1-CD/01%20-%20Opening%20Themes%20-%20Introduction.mp3"></audio>
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🔥 PLAY THEME: "HERO" (DON QUIXOTE)</button>
+    <audio id="themeMusic" loop src="https://storage.googleapis.com/ikz-public-assets/don_hero_theme.mp3"></audio>
 
     <div id="selectScreen" class="screen active-screen">
         <p class="subtitle">"จงเลือกอัตลักษณ์ (Identity) ของดอนกิฮอเต้เพื่อเข้าสู่ภารกิจ"</p>
