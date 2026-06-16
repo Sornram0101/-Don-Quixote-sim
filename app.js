@@ -1,4 +1,3 @@
-// ข้อมูลอัตลักษณ์ของ Don Quixote พร้อมเพิ่มค่า spGain (ค่าสติที่จะได้รับต่อการโจมตี 1 ครั้ง)
 const donData = {
     wCorp: {
         name: "W Corp. L3 Cleanup Agent",
@@ -54,7 +53,7 @@ const enemyData = {
 
 let selectedIdentityKey = "";
 let activeEnemyKey = "dummy";
-let currentSP = 0; // ตัวแปรเก็บค่าสติปัจจุบันในด่าน
+let currentSP = 0; 
 
 function initCharacterSelection() {
     const grid = document.getElementById("identityGrid");
@@ -83,16 +82,11 @@ function selectCharacter(key) {
 function goToBattleScreen() {
     document.getElementById("selectScreen").classList.remove("active-screen");
     document.getElementById("battleScreen").classList.add("active-screen");
-    
     document.getElementById("activeCharacterTitle").innerText = `กำลังควบคุม: ${donData[selectedIdentityKey].name}`;
-    
-    // ตั้งค่าสติเริ่มต้นที่ 0
     currentSP = 0;
     updateSPUI();
-    
     document.getElementById("resultBox").style.display = "none";
     document.getElementById("coinStage").innerHTML = "";
-
     updateSkillOptions();
 }
 
@@ -106,12 +100,12 @@ function toggleMusic() {
     const btn = document.getElementById("musicBtn");
     if (music.paused) {
         music.play();
-        btn.innerText = "⏸️ PAUSE BATTLE THEME";
+        btn.innerText = "⏸️ PAUSE THEME: HERO";
         btn.style.backgroundColor = "#ff9800";
     } else {
         music.pause();
-        btn.style.backgroundColor = "#00bcd4";
-        btn.innerText = "🎵 PLAY BATTLE THEME";
+        btn.style.backgroundColor = "#ffe066";
+        btn.innerText = "🎠 PLAY THEME: HERO";
     }
 }
 
@@ -153,8 +147,6 @@ function executeCoinToss() {
 
     const selectedIdentity = donData[selectedIdentityKey];
     const selectedSkill = selectedIdentity.skills[skillIndex];
-    
-    // โอกาสออกหัวคำนวณจากค่าสติปัจจุบัน (Base 50% + currentSP)
     const headChance = 50 + currentSP; 
 
     tossButton.disabled = true;
@@ -209,21 +201,18 @@ function executeCoinToss() {
                     
                     updateEnemyUI();
 
-                    // คำนวณเพิ่มค่าสติสะสมหลังการโจมตีตามอัตราของตัวละครนั้นๆ
-                    const previousSP = currentSP;
                     currentSP += selectedIdentity.spGain;
-                    if (currentSP > 45) currentSP = 45; // ล็อคไม่ให้เกิน 45 ตามกฎเกม
-                    
-                    updateSPUI(); // อัปเดตตัวเลขสติบนหน้าจอ
+                    if (currentSP > 45) currentSP = 45; 
+                    updateSPUI(); 
 
                     document.getElementById("flavorText").innerText = selectedIdentity.flavor;
                     document.getElementById("tossDetails").innerHTML = detailsHTML;
                     document.getElementById("finalPowerResult").innerHTML = `พลังรวมสุดท้าย (Final Power): ${currentPower}`;
                     
-                    let spGainText = `<br><span style="color: #4caf50; font-size:14px;">(จิตใจฮึกเหิม! ค่าสติเพิ่มขึ้น +${selectedIdentity.spGain} SP จากการปะทะ)</span>`;
+                    let spGainText = `<br><span style="color: #4caf50; font-size:14px;">(เพื่อความยุติธรรม! ค่าสติเพิ่มขึ้น +${selectedIdentity.spGain} SP จากการต่อสู้)</span>`;
                     
                     if(enemy.currentHp === 0) {
-                        document.getElementById("damageResult").innerHTML = `💥 โจมตีแรงกระแทก ${totalDamage} ดาเมจ! ${spGainText} <br>🎉 ศัตรูพ่ายแพ้ราบคาบด้วยพลังแห่งความยุติธรรม!`;
+                        document.getElementById("damageResult").innerHTML = `💥 โจมตีแรงกระแทก ${totalDamage} ดาเมจ! ${spGainText} <br>🎉 ศัตรูพ่ายแพ้ราบคาบด้วยพลังแห่งอัศวินและบทเพลง HERO!`;
                     } else {
                         document.getElementById("damageResult").innerHTML = `💥 สร้างความเสียหาย ${totalDamage} ดาเมจ แก่ศัตรู! ${spGainText}`;
                     }
