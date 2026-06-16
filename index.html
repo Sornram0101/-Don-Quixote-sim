@@ -54,6 +54,15 @@
         .identity-card h4 { margin: 0 0 5px 0; color: #fff; }
         .identity-card p { margin: 0; font-size: 13px; color: #aaa; }
 
+        /* แผงสถานะผู้เล่น */
+        .player-board {
+            background: #111b26;
+            border: 1px solid #00bcd4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: left;
+        }
         .control-panel {
             text-align: left;
             background: #151515;
@@ -77,9 +86,11 @@
         }
         .sp-value { color: #4caf50; font-size: 18px; }
 
+        /* บอร์ดศัตรู */
         .enemy-board { background: #261111; border: 1px solid #ff4444; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;}
         .hp-bar-bg { background: #444; width: 100%; height: 20px; border-radius: 10px; overflow: hidden; margin-top: 5px; }
         .hp-bar-fill { background: #df2020; width: 100%; height: 100%; transition: width 0.3s ease; }
+        .hp-bar-fill.player-hp { background: #00bcd4; }
 
         .music-btn { background-color: #ff4500; color: white; font-weight: bold; margin-bottom: 15px; border: 2px solid #ffcc00; box-shadow: 0 0 15px rgba(255, 69, 0, 0.6); letter-spacing: 1px; cursor: pointer; }
         .music-btn:hover { background-color: #e03e00; box-shadow: 0 0 20px rgba(255, 69, 0, 0.9); }
@@ -106,6 +117,10 @@
         .tail-text { color: #f44336; }
         .final-power { font-size: 20px; color: #ffeb3b; font-weight: bold; margin-top: 10px; }
         .flavor-text { color: #00bcd4; font-style: italic; font-size: 14px; }
+        
+        /* สไตล์ประกาศเทิร์นศัตรู */
+        .enemy-turn-alert { color: #ff4444; font-weight: bold; animation: blink 1s linear infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -128,15 +143,21 @@
     <div id="battleScreen" class="screen">
         <p class="subtitle" id="activeCharacterTitle">กำลังรบ</p>
 
+        <div class="player-board">
+            <h3 style="margin: 0 0 5px 0; color: #00bcd4;">ฝ่ายเรา: Don Quixote</h3>
+            <div>HP ของเรา: <span id="playerHpText">200 / 200</span></div>
+            <div class="hp-bar-bg"><div class="hp-bar-fill player-hp" id="playerHpBar"></div></div>
+        </div>
+
         <div class="enemy-board">
             <label for="enemySelect">🎯 เป้าหมายภารกิจ:</label>
             <select id="enemySelect" onchange="changeEnemy()">
-                <option value="dummy">หุ่นซ้อมรบธรรมดา (HP: 100)</option>
-                <option value="pequod">ลูกเรือ Pequod Town (HP: 250)</option>
-                <option value="windmill">ยักษ์กังหันลมในจินตนาการ (BOSS) (HP: 600)</option>
+                <option value="dummy">หุ่นซ้อมรบธรรมดา (HP: 100 | พลังโจมตี: ต่ำ)</option>
+                <option value="pequod">ลูกเรือ Pequod Town (HP: 250 | พลังโจมตี: ปานกลาง)</option>
+                <option value="windmill">ยักษ์กังหันลมในจินตนาการ (BOSS) (HP: 600 | พลังโจมตี: สูงมาก!)</option>
             </select>
             <h3 id="enemyName" style="margin: 10px 0 5px 0; color: #ff4444;">ศัตรู: หุ่นซ้อมรบธรรมดา</h3>
-            <div>HP: <span id="enemyHpText">100 / 100</span></div>
+            <div>HP ศัตรู: <span id="enemyHpText">100 / 100</span></div>
             <div class="hp-bar-bg"><div class="hp-bar-fill" id="hpBar"></div></div>
         </div>
 
@@ -151,17 +172,18 @@
         </div>
 
         <button class="btn-action" id="tossButton" onclick="executeCoinToss()">ATTACKศัตรู! ⚔️</button>
-        <button class="btn-back" id="backBtn" onclick="goToSelectScreen()">◀ เปลี่ยนตัวละคร</button>
+        <button class="btn-back" id="backBtn" onclick="goToSelectScreen()">◀ เปลี่ยนตัวละคร / ยอมแพ้</button>
 
         <div class="coin-stage" id="coinStage"></div>
 
         <div id="resultBox" class="result-box">
-            <h3>[ บันทึกการปะทะ ]</h3>
+            <h3>[ บันทึกการปะทะประจำเทิร์น ]</h3>
             <p id="flavorText" class="flavor-text"></p>
             <hr style="border-color: #222;">
             <p id="tossDetails"></p>
             <p id="finalPowerResult" class="final-power"></p>
-            <p id="damageResult" style="color: #ff4444; font-weight: bold; font-size: 18px;"></p>
+            <p id="damageResult" style="color: #ff4444; font-weight: bold; font-size: 17px;"></p>
+            <p id="enemyResponseResult" style="color: #ff9800; font-weight: bold; font-size: 17px; margin-top: 10px;"></p>
         </div>
     </div>
 </div>
