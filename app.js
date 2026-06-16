@@ -209,15 +209,15 @@ function executeCoinToss() {
                     document.getElementById("tossDetails").innerHTML = detailsHTML;
                     document.getElementById("finalPowerResult").innerHTML = `พลังรวมสุดท้าย (Final Power): ${currentPower}`;
                     
-                    let spGainText = `<br><span style="color: #4caf50; font-size:14px;">(จิตวิญญาณอัศวินตื่นรู้! ค่าสติเพิ่มขึ้น +${selectedIdentity.spGain} SP)</span>`;
+                    let spGainText = `<br><span style="color: #4caf50; font-size:14px;">(เพื่อความยุติธรรม! ค่าสติเพิ่มขึ้น +${selectedIdentity.spGain} SP)</span>`;
                     
                     if(enemy.currentHp === 0) {
-                        document.getElementById("damageResult").innerHTML = `💥 โจมตีแรงกระแทก ${totalDamage} ดาเมจ! ${spGainText} <br>🎉 "ศัตรูพ่ายแพ้ราบคาบ! บทเพลงแห่ง HERO ได้ขับขานเพื่อความยุติธรรมแล้ว!"`;
+                        document.getElementById("damageResult").innerHTML = `💥 โจมตีแรงกระแทก ${totalDamage} ดาเมจ! ${spGainText} <br>🎉 "ศัตรูพ่ายแพ้ราบคาบ! บทเพลงแห่ง HERO ได้ขับขานเคียงคู่ไปกับอัศวินผู้เที่ยงธรรมแล้ว!"`;
                     } else {
                         document.getElementById("damageResult").innerHTML = `💥 สร้างความเสียหาย ${totalDamage} ดาเมจ แก่ศัตรู! ${spGainText}`;
                     }
                     
-                    document.getElementById("resultBox").style.display = "block";
+                    document.getElementByIdBox = document.getElementById("resultBox").style.display = "block";
                     tossButton.disabled = false;
                     backBtn.disabled = false;
                 }, 300);
