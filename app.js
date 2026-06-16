@@ -217,7 +217,7 @@ function executeCoinToss() {
                         document.getElementById("damageResult").innerHTML = `💥 สร้างความเสียหาย ${totalDamage} ดาเมจ แก่ศัตรู! ${spGainText}`;
                     }
                     
-                    document.getElementByIdBox = document.getElementById("resultBox").style.display = "block";
+                    document.getElementById("resultBox").style.display = "block";
                     tossButton.disabled = false;
                     backBtn.disabled = false;
                 }, 300);
